@@ -710,3 +710,22 @@
 		margin: auto;
 		width: 65%;
 	}
+
+
+	/* Publications */
+
+	.publications #header {
+		height: 330px;
+		background-position: center;
+	}
+
+	.publicationList a{
+		color: white;
+	}
+
+	.publicationList li{
+		color: white;
+		margin: auto;
+		width: 60%;
+		padding :10px;
+	}
