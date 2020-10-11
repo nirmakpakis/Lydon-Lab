@@ -17,12 +17,13 @@
         <link rel="stylesheet" href="css/style.css" />
     </noscript>
     <!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
+    <script src="https://cdn.jsdelivr.net/npm/contentful@5.0.1/dist/contentful.browser.min.js"></script>
 </head>
 
 <body class="publications">
 
     <!-- Header -->
-    <div id="header" >
+    <div id="header">
         <div class="container">
 
             <!-- Logo -->
@@ -47,12 +48,12 @@
                     </li>
                     <li><a href="get-involved.html">Get Involved</a>
                         <ul>
-                            <li><a href="#">Undergraduate Research Project</a></li>
-                            <li><a href="#">Volunteer</a></li>
-                            <li><a href="#">Research Assistant</a></li>
-                            <li><a href="#">Participate</a></li>
-                            <li><a href="#">Summer Research Fellowships</a></li>
-                            <li><a href="#">Other Inquiries- Email Us</a></li>
+                            <li><a href="get-involved.html">Undergraduate Research Project</a></li>
+                            <li><a href="volunteer.html">Volunteer</a></li>
+                            <li><a href="research-assistant.html">Research Assistant</a></li>
+                            <li><a href="participate.html">Participate</a></li>
+                            <li><a href="summer-research-fellowship.html">Summer Research Fellowships</a></li>
+                            <li><a href="other-inquiries.html">Other Inquiries- Email Us</a></li>
                         </ul>
                     </li>
                     <li><a href="poster-presentations.html">Poster Presentations</a>
@@ -61,11 +62,100 @@
             </nav>
 
         </div>
-        
+
         <div class="sectionName">
             <h1>Lab Members</h1>
         </div>
 
-    </div>
+        <div id="members">
 
+        </div>
+
+        <div class="wrapper style2">
+            <span class="byline" style="font-size: 30px; color:red"> Principal Investigator</span>
+            <h1></h1>
+            <a href="#"><img src="images/pictures/lydon.png" alt=""></a>
+            <p style="font-size: 20px; color:black">
+            </p>
+
+            <hr style="color:black">
+            </hr>
+
+            <br>
+            <span class="byline" style="font-size: 30px; color:red"> Graduate Students</span>
+            <br>
+            <br>
+
+            <a href="#"><img class="img-circle alignleft" src="images/pictures/hasagani.jpg" height="330" width="250"
+                    alt=""></a>
+            <h1 style="color:black">Hasagani Tissera</h1>
+            <a href="mailto:hasagani.tissera@mail.mcgill.ca">hasagani.tissera@mail.mcgill.ca</a>
+            <p style="color:black !important; margin: 0 0 15px; line-height: 1.618; font-size: 18px;">
+                My primary research interest lies in examining social perception in close relationships. More
+                specifically, I am interested in investigating how accurate and biased meta-perceptions (i.e., beliefs
+                about what others think of us) shape personal and relational well-being. For instance, is it beneficial
+                to assume our partners understand us, even when they do not? When is it adaptive to be accurate in our
+                metaperceptions? My research is aimed at understanding both short and long-term consequences of accurate
+                and biased metaperceptions within close relationships.
+            </p>
+            <p>&nbsp;</p>
+        </div>
+    </div>
+    <script>
+        const client = contentful.createClient({
+            // This is the space ID. A space is like a project folder in Contentful terms
+            space: "0k6s50brilx1",
+            // This is the access token for this space. Normally you get both ID and the token in the Contentful web app
+            accessToken: "-c70h80MeuiFWOT78HERYUR-qdHstQUF0eO6Y1FYDss"
+        });
+
+        const parser = items => items.map(item => {
+            let newitem = item.fields;
+            newitem.image = newitem.profile.fields.file['url'];
+            return newitem;
+        })
+
+        const render = items => {
+            let parsedItems = parser(items)
+
+            // Organize Items by their type
+            let typeDict = new Object();
+
+            for (let index in parsedItems) {
+                let item = parsedItems[index];
+                if (typeDict[item.memberType]) {
+                    typeDict[item.memberType].push(item)
+                } else {
+                    typeDict[item.memberType] = [item]
+                }
+            }
+
+            // Display members
+            membersDiv = document.getElementById("members");
+            for (let type in typeDict) {
+                let h1 = document.createElement('H1');
+                h1.innerHTML = type;
+                membersDiv.appendChild(h1);
+                let innerDiv = document.createElement('DIV');
+                for (let index in typeDict[type]) {
+                    let member = typeDict[type][index];
+                    var p = document.createElement('P');
+                    p.innerHTML = member.fullName;
+                    innerDiv.appendChild(p);
+                    var img = document.createElement('img');
+                    img.src = 'https://' + member.image;
+                    innerDiv.append(img);
+                    var email = document.createElement('P');
+                    email.innerHTML = member.email;
+                    innerDiv.appendChild(email);
+                }
+                membersDiv.appendChild(innerDiv);
+            }
+        }
+        client.getEntries({
+            'content_type': 'member'
+        }).then(response => render(response.items))
+    </script>
 </body>
+
+</html>

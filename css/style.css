@@ -184,24 +184,31 @@
 		position: relative;
 	}
 
-		.image.fit {
-			display: block;
-		}
+	.image.fit {
+		display: block;
+	}
 
-			.image.fit img {
-				display: block;
-				width: 100%;
-			}
+	.image.fit img {
+		display: block;
+		width: 100%;
+	}
 
-		.image.feature {
-			display: block;
-			margin: 0 0 2em 0;
-		}
+	.image.feature {
+		display: block;
+		margin: 0 0 2em 0;
+	}
 
-			.image.feature img {
-				display: block;
-				width: 100%;
-			}
+	.image.feature img {
+		display: block;
+		width: 100%;
+	}
+	.img-circle {
+		border-radius: 50px;
+	}
+	img.alignleft {
+
+		margin: 0 2.4rem 2.4rem 0;
+	}
 
 /* Icon */
 
